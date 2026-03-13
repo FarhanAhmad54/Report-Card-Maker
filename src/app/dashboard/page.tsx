@@ -110,6 +110,10 @@ export default function DashboardPage() {
             </div>
             <h1 className="text-lg font-bold text-text">Report Card Maker</h1>
           </div>
+          <div className="flex-1 ml-8 flex items-center gap-6 hidden sm:flex">
+            <button onClick={() => router.push('/dashboard')} className="text-sm font-medium text-text hover:text-primary-400 transition-colors">Dashboard</button>
+            <button onClick={() => router.push('/history')} className="text-sm font-medium text-text-muted hover:text-text transition-colors">History</button>
+          </div>
           <div className="flex items-center gap-4">
             <span className="text-sm text-text-muted hidden sm:block">Welcome, <span className="text-primary-400 font-medium">{teacher.name}</span></span>
             <button

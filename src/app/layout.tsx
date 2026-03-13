@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Report Card Maker — Teacher Dashboard",
   description: "Generate and print student report cards quickly. Built for teachers.",
+  verification: {
+    google: "fUdkV2EwNG5XbCZ60L2Ocn30EBM9RikkILL5YT295AI",
+  },
 };
 
 export default function RootLayout({
