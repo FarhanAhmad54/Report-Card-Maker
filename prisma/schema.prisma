@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Teacher {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  classes   Class[]
+  createdAt DateTime @default(now())
+}
+
+model Class {
+  id           String    @id @default(cuid())
+  academicYear String
+  className    String
+  section      String
+  teacherId    String
+  teacher      Teacher   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  students     Student[]
+  createdAt    DateTime  @default(now())
+
+  @@unique([academicYear, className, section])
+}
+
+model Student {
+  id         String      @id @default(cuid())
+  rollNumber Int
+  name       String
+  classId    String
+  class      Class       @relation(fields: [classId], references: [id], onDelete: Cascade)
+  marks      Marks?
+  grades     Grades?
+  attendance Attendance?
+  evaluation Evaluation?
+  createdAt  DateTime    @default(now())
+
+  @@unique([classId, rollNumber])
+}
+
+model Marks {
+  id        String  @id @default(cuid())
+  studentId String  @unique
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  // Each JSON field stores: { ut: number, cp: number, hye: number }
+  englishLit   Json?
+  englishLang  Json?
+  hindiLit     Json?
+  hindiLang    Json?
+  mathArith    Json?
+  mathAlgGeo   Json?
+  ssHistory    Json?
+  ssCivics     Json?
+  ssGeography  Json?
+  sciPhysics   Json?
+  sciChemistry Json?
+  sciBiology   Json?
+  computerSci  Json?
+  gk           Json?
+  arts         Json?
+  project      Json?
+
+  // Calculated fields
+  grandTotal Int?
+  percentage Float?
+  rank       Int?
+  division   String?
+  result     String? // "Pass" or "Fail"
+}
+
+model Grades {
+  id            String  @id @default(cuid())
+  studentId     String  @unique
+  student       Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  urduSanskrit  String?
+  moralTeaching String?
+  supw          String?
+  arabic        String?
+}
+
+model Attendance {
+  id          String  @id @default(cuid())
+  studentId   String  @unique
+  student     Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  workingDays Int?
+  daysPresent Int?
+}
+
+model Evaluation {
+  id        String  @id @default(cuid())
+  studentId String  @unique
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  evalText  String?
+  remarks   String?
+}
