@@ -44,11 +44,40 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#0f172a] p-4">
-      {/* Floating decorative elements */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#0f172a] p-4 overflow-hidden relative">
+      {/* Animated background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        {/* Large floating gradient orbs */}
+        <div className="absolute w-[500px] h-[500px] rounded-full blur-[120px] opacity-20 bg-purple-600 animate-[floatOrb1_20s_ease-in-out_infinite]" style={{ top: '-10%', left: '-10%' }} />
+        <div className="absolute w-[400px] h-[400px] rounded-full blur-[100px] opacity-15 bg-blue-500 animate-[floatOrb2_25s_ease-in-out_infinite]" style={{ bottom: '-10%', right: '-5%' }} />
+        <div className="absolute w-[300px] h-[300px] rounded-full blur-[80px] opacity-10 bg-emerald-500 animate-[floatOrb3_18s_ease-in-out_infinite]" style={{ top: '40%', left: '60%' }} />
+
+        {/* Subtle grid overlay */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+          backgroundSize: '60px 60px',
+        }} />
+
+        {/* Floating particles */}
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-white/30 rounded-full animate-[floatUp_var(--duration)_linear_infinite]"
+            style={{
+              left: `${5 + (i * 4.7) % 90}%`,
+              bottom: '-5%',
+              '--duration': `${8 + (i % 7) * 3}s`,
+              animationDelay: `${(i * 1.3) % 10}s`,
+              width: `${2 + (i % 3)}px`,
+              height: `${2 + (i % 3)}px`,
+              opacity: 0.2 + (i % 5) * 0.1,
+            } as React.CSSProperties}
+          />
+        ))}
+
+        {/* Shooting stars */}
+        <div className="absolute w-[150px] h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shootingStar1_6s_ease-in_infinite]" style={{ top: '15%', left: '-10%', transform: 'rotate(-35deg)' }} />
+        <div className="absolute w-[100px] h-[1px] bg-gradient-to-r from-transparent via-purple-300/30 to-transparent animate-[shootingStar2_9s_ease-in_infinite]" style={{ top: '35%', left: '-10%', transform: 'rotate(-30deg)' }} />
       </div>
 
       <div className="relative w-full max-w-md">
