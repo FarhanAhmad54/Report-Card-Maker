@@ -154,3 +154,9 @@
   55% { transform: translateX(120vw) translateY(50vh) rotate(-30deg); opacity: 0; }
   100% { opacity: 0; }
 }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
